@@ -1,0 +1,180 @@
+/* DAMAGE APPLICATION */
+.damage-application.app {
+  transition: opacity 500ms;
+}
+.damage-application.app.fade {
+  opacity: 0.1;
+  pointer-events: none;
+}
+.damage-application .window-content {
+  overflow: hidden;
+}
+.damage-application.app .content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.damage-application.app header {}
+
+/* Message section */
+.damage-application.app .message-section {}
+.damage-application.app .damage-types {
+  display: flex;
+  margin: 0;
+  flex-direction: column;
+}
+.damage-application.app .damage-total {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 0.5em 0;
+  font-size: 1.4em;
+}
+.damage-application.app .damage-types .type {
+  padding: 0.25em;
+  display: flex;
+  align-items: center;
+}
+.damage-application.app .damage-types .type label {
+  flex: 2;
+  font-family: var(--dnd5e-font-roboto-slab);
+  font-size: var(--font-size-14);
+  font-weight: bold;
+}
+.damage-application.app .damage-types .type input {
+  flex: 1;
+}
+.damage-application.app .buttons {
+  display: flex;
+  gap: 0.5em;
+}
+.damage-application.app .notes {
+  font-style: italic;
+  margin: 0.5em 1em 0 1em;
+}
+
+/* Actor section */
+.damage-application.app .actor-section {
+  overflow: hidden overlay;
+}
+.damage-application.app [data-action="toggle-trait"].enabled i:before {
+  content: "\f205";
+}
+.damage-application.app [data-action="toggle-trait"]:not(.enabled) i:before {
+  content: "\f204";
+}
+.damage-application.app [data-action="toggle-trait"]:not(.enabled) .trait-name {
+  text-decoration: line-through;
+}
+.damage-application.app .actor {
+  border-top: 1px solid var(--dnd5e-color-gold);
+  padding: 0.3em 0;
+  display: grid;
+  grid-template-columns: 5em 1.5fr 3fr 2.5fr;
+}
+.damage-application.app .actor.dead {
+  opacity: 0.5;
+  order: -1;
+}
+.damage-application .actor > :not(:last-child) {
+  border-right: 1px solid var(--dnd5e-color-gold);
+}
+.damage-application .actor .portrait {
+  position: relative;
+}
+.damage-application .actor .portrait .fa-bullseye {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px 4px;
+  cursor: help;
+}
+.damage-application .actor img {
+  min-width: 5em;
+  min-height: 5em;
+  max-width: 5em;
+  border: none;
+  padding-right: 0.5em;
+}
+.damage-application.app .actor .header {
+  text-align: center;
+}
+.damage-application.app .actor .header .name {
+  font-family: var(--dnd5e-font-roboto-slab);
+  font-size: var(--font-size-14);
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.damage-application.app .actor .header img {
+  border: none;
+  padding: 1em;
+  min-width: 100px;
+  min-height: 100px;
+}
+.damage-application .actor .trait-name {
+  font-family: var(--dnd5e-font-roboto);
+  font-size: var(--font-size-12);
+  color: var(--color-text-dark-5);
+}
+.damage-application .actor .trait-name .fa-solid {
+  color: var(--color-text-dark-primary);
+}
+.damage-application .actor .trait-label {
+  font-style: italic;
+  color: var(--dnd5e-color-tan);
+}
+.damage-application.app .actor .header .hasPlayer {
+  font-style: italic;
+}
+.damage-application.app .actor .header .health-bar {
+  width: 90%;
+  position: relative;
+  border: 1px solid var(--dnd5e-color-gold);
+  height: 10px;
+  margin: 3px 5px 0 5px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.damage-application.app .actor .header .health-bar .bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+.damage-application.app :is(.trait-section, .functions) {
+  padding: 0 0.5em;
+  display: flex;
+  flex-direction: column;
+}
+.damage-application.app .trait-section .no-traits {
+  font-style: italic;
+  color: var(--dnd5e-color-tan);
+  text-align: center;
+}
+.damage-application.app .trait-section [data-action="toggle-trait"] {
+  display: flex;
+  justify-content: space-between;
+}
+.damage-application.app .functions [data-action] {
+  white-space: nowrap;
+}
+.damage-application.app .functions [data-action="saving-throw"].failure {
+  color: var(--dnd5e-color-failure);
+}
+.damage-application.app .functions [data-action="saving-throw"].success {
+  color: var(--dnd5e-color-success);
+}
+.damage-application.app .functions [data-action] .fa-solid {
+  min-width: 1.5em;
+  min-height: 1.5em;
+  text-align: center;
+}
+
+/* Chatlog buttons */
+.damage-application.damage-roll-buttons {
+  display: flex;
+  margin-top: 2px;
+}
+ul.dnd5e2.evaluation li.target {
+  cursor: pointer;
+}

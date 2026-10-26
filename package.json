@@ -1,0 +1,8 @@
+{
+  "name": "damage-application-dnd5e6-fork",
+  "version": "14.0.1",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/compat.test.mjs"
+  }
+}

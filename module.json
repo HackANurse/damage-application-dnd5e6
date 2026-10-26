@@ -1,0 +1,51 @@
+{
+    "id": "damage-application",
+    "title": "Damage Application (dnd5e 6 compatibility fork)",
+    "version": "14.0.1",
+    "url": "https://github.com/HackANurse/damage-application-dnd5e6",
+    "authors": [
+        {
+            "name": "Zhell",
+            "url": "https://github.com/krbz999"
+        },
+        {
+            "name": "HackANurse (compatibility fork)",
+            "url": "https://github.com/HackANurse"
+        }
+    ],
+    "compatibility": {
+        "minimum": "14.367",
+        "verified": "14.368",
+        "maximum": "14"
+    },
+    "esmodules": [
+        "module/module.mjs"
+    ],
+    "styles": [
+        "module/module.css"
+    ],
+    "relationships": {
+        "systems": [
+            {
+                "id": "dnd5e",
+                "type": "system",
+                "compatibility": {
+                    "minimum": "6.0.6",
+                    "maximum": "6.0.6",
+                    "verified": "6.0.6"
+                }
+            }
+        ]
+    },
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "languages/en.json"
+        }
+    ],
+    "flags": {
+        "hotReload": false
+    },
+    "license": "https://github.com/HackANurse/damage-application-dnd5e6/blob/main/LICENSE"
+}
