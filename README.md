@@ -14,11 +14,17 @@ The code has been checked against the installed dnd5e 6.0.6 and Foundry 14 APIs.
 
 ## Install
 
-Copy the module files into `Data/modules/damage-application/`, then restart Foundry. This fork uses the original module ID, so it replaces the original installation and cannot run alongside it.
+In Foundry VTT, open **Add-on Modules → Install Module**, paste this URL into **Manifest URL**, and install:
+
+```text
+https://raw.githubusercontent.com/HackANurse/damage-application-dnd5e6/main/module.json
+```
+
+Alternatively, download the [installable ZIP](https://raw.githubusercontent.com/HackANurse/damage-application-dnd5e6/main/releases/damage-application-14.0.1.zip) and extract its contents into `Data/modules/damage-application/`, then restart Foundry. This fork uses the original module ID, so it replaces the original installation and cannot run alongside it.
 
 ## Source and updates
 
-The source for this fork is at [HackANurse/damage-application-dnd5e6](https://github.com/HackANurse/damage-application-dnd5e6). This repository does not yet provide a release ZIP or an automatic update manifest. Keep `LICENSE` and `NOTICE.md` with any redistributed copy.
+The source for this fork is at [HackANurse/damage-application-dnd5e6](https://github.com/HackANurse/damage-application-dnd5e6). The root `module.json` is the stable manifest URL for installation and update checks. Its `download` field points to a versioned ZIP stored in `releases/`. Keep `LICENSE` and `NOTICE.md` with any redistributed copy.
 
 Run the checks with:
 
