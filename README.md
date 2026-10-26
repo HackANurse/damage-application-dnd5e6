@@ -26,3 +26,7 @@ node --check module/module.mjs
 ## Credits and license
 
 Original code, styles, templates, and English localization: **Zhell (krbz999)**, © 2023, under the MIT License. Compatibility fork: **HackANurse**. The unmodified original license text is included in [LICENSE](LICENSE). See [NOTICE.md](NOTICE.md) for provenance and changes. This repository does not bundle Foundry or dnd5e source code or third-party artwork.
+
+## Support this fork
+
+You can [support HackANurse's compatibility fork on Buy Me a Coffee](https://buymeacoffee.com/andybegh). This link supports the maintenance of this independent fork; it does not represent the original author.
