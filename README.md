@@ -4,6 +4,10 @@ A compatibility update of [Zhell's Damage Application](https://github.com/krbz99
 
 The module adds controls to damage and healing chat messages for applying damage, half damage, healing, and temporary HP to selected tokens. GMs can open a dialog to adjust damage types, toggle relevant damage traits, and roll saving throws before applying damage.
 
+## Independent add-on
+
+This project is solely an independent add-on module for Foundry Virtual Tabletop and its dnd5e game system. It is not associated with, affiliated with, sponsored by, or endorsed by Foundry Virtual Tabletop, the dnd5e game system team, or Wizards of the Coast.
+
 ## Status
 
 The code has been checked against the installed dnd5e 6.0.6 and Foundry 14 APIs. Local automated checks cover damage message data, saving throws, damage options, and the “no damage on a successful save” case. A user has also tested the fork in Foundry and reported that it works. This is a limited field report; broader compatibility has not been established.
