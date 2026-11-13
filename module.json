@@ -18,7 +18,7 @@
     "compatibility": {
         "minimum": "14.367",
         "verified": "14.368",
-        "maximum": "14"
+        "maximum": "14.370"
     },
     "esmodules": [
         "module/module.mjs"
@@ -34,7 +34,7 @@
                 "compatibility": {
                     "minimum": "6.0.6",
                     "maximum": "6.1.0",
-                    "verified": "6.1.0"
+                    "verified": "6.0.6"
                 }
             }
         ]
