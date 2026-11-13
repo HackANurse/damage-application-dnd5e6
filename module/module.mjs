@@ -357,7 +357,8 @@ class DamageApplicator extends dnd5e.applications.DialogMixin(FormApplication) {
     if (saved && this.onSave === "none") return actor;
     const {values, properties} = this.model;
     const mod = saved ? (this.onSave === "full" ? -1 : -0.5) : -1;
-    return DamageApplicator.applyDamageToActor(actor, values, properties, mod, this._ignoredTraits(actor, clone));
+    return DamageApplicator.applyDamageToActor(actor, values, properties, mod,
+      this._ignoredTraits(actor, clone), this.message);
   }
 
   /**
@@ -370,7 +371,8 @@ class DamageApplicator extends dnd5e.applications.DialogMixin(FormApplication) {
     if (saved && this.onSave === "none") return actor;
     const {values, properties} = this.model;
     const mod = saved ? (this.onSave === "full" ? 1 : 0.5) : 1;
-    return this.constructor.applyDamageToActor(actor, values, properties, mod, this._ignoredTraits(actor, clone));
+    return this.constructor.applyDamageToActor(actor, values, properties, mod,
+      this._ignoredTraits(actor, clone), this.message);
   }
 
   /** Damage traits disabled in this dialog, passed to dnd5e's damage calculator. */
@@ -461,10 +463,10 @@ class DamageApplicator extends dnd5e.applications.DialogMixin(FormApplication) {
    */
   static async _quickApply(event) {
     const undo = event.shiftKey;
-    const {values, properties} = await this._getDataFromDamageRoll(event);
+    const {values, properties, message} = await this._getDataFromDamageRoll(event);
     const actors = this._getActors();
     const fn = undo ? this.undoDamage : this.applyDamage;
-    for (const actor of actors) await fn.call(this, actor, values, properties);
+    for (const actor of actors) await fn.call(this, actor, values, properties, false, message);
   }
 
   /**
@@ -474,10 +476,10 @@ class DamageApplicator extends dnd5e.applications.DialogMixin(FormApplication) {
    */
   static async _quickApplyHalf(event) {
     const undo = event.shiftKey;
-    const {values, properties} = await this._getDataFromDamageRoll(event);
+    const {values, properties, message} = await this._getDataFromDamageRoll(event);
     const actors = this._getActors();
     const fn = undo ? this.undoDamage : this.applyDamage;
-    for (const actor of actors) await fn.call(this, actor, values, properties, true);
+    for (const actor of actors) await fn.call(this, actor, values, properties, true, message);
   }
 
   /**
@@ -487,13 +489,13 @@ class DamageApplicator extends dnd5e.applications.DialogMixin(FormApplication) {
    * @returns {Promise<void>}
    */
   static async _quickSaveAndApply(event) {
-    const {properties, saveData, values, onSave} = await this._getDataFromDamageRoll(event);
+    const {properties, saveData, values, onSave, message} = await this._getDataFromDamageRoll(event);
     const actors = this._getActors();
     for (const actor of actors) {
       const saved = await this.rollAbilitySave(actor, saveData.ability, saveData.dc, {event});
       if ((saved === null) || (onSave === "none" && saved)) continue;
       const mod = saved ? (onSave === "full" ? 1 : 0.5) : 1;
-      await this.applyDamageToActor(actor, values, properties, mod);
+      await this.applyDamageToActor(actor, values, properties, mod, {}, message);
     }
   }
 
@@ -556,10 +558,10 @@ class DamageApplicator extends dnd5e.applications.DialogMixin(FormApplication) {
    * @param {boolean} [half]              Whether to halve the damage.
    * @returns {Promise<Actor5e|null>}
    */
-  static async applyDamage(actor, values, properties, half = false) {
+  static async applyDamage(actor, values, properties, half = false, message = null) {
     if (!this.canDamageActor(actor)) return null;
     const mod = half ? 0.5 : 1;
-    return this.applyDamageToActor(actor, values, properties, mod);
+    return this.applyDamageToActor(actor, values, properties, mod, {}, message);
   }
 
   /**
@@ -570,9 +572,9 @@ class DamageApplicator extends dnd5e.applications.DialogMixin(FormApplication) {
    * @param {boolean} [half]              Whether to halve the damage.
    * @returns {Promise<Actor5e>}
    */
-  static async undoDamage(actor, values, properties, half = false) {
+  static async undoDamage(actor, values, properties, half = false, message = null) {
     const mod = half ? -0.5 : -1;
-    return this.applyDamageToActor(actor, values, properties, mod);
+    return this.applyDamageToActor(actor, values, properties, mod, {}, message);
   }
 
   /**
@@ -583,11 +585,12 @@ class DamageApplicator extends dnd5e.applications.DialogMixin(FormApplication) {
    * @param {number} [mod]                A modifier to multiply all damage/healing by.
    * @returns {Promise<Actor5e>}
    */
-  static applyDamageToActor(actor, values, properties, mod = 1, ignore = {}) {
+  static applyDamageToActor(actor, values, properties, mod = 1, ignore = {}, message = null) {
     const damages = Object.entries(values).map(([k, v]) => ({
       type: k, value: v, properties: properties ?? new Set()
     }));
-    const options = {multiplier: mod, ignore};
+    const baseOptions = {multiplier: mod, ignore};
+    const options = message?.system?.getDamageApplicationOptions?.(baseOptions) ?? baseOptions;
     return actor.applyDamage(damages, options);
   }
 
@@ -784,6 +787,7 @@ class DamageApplicator extends dnd5e.applications.DialogMixin(FormApplication) {
     }, new Set());
 
     return {
+      message: message,
       properties: properties,
       item: item,
       values: values,

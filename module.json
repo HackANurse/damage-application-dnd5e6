@@ -1,10 +1,10 @@
 {
     "id": "damage-application",
     "title": "Damage Application (dnd5e 6 compatibility fork)",
-    "version": "14.0.1",
+    "version": "14.0.2",
     "url": "https://github.com/HackANurse/damage-application-dnd5e6",
     "manifest": "https://raw.githubusercontent.com/HackANurse/damage-application-dnd5e6/main/module.json",
-    "download": "https://raw.githubusercontent.com/HackANurse/damage-application-dnd5e6/main/releases/damage-application-14.0.1.zip",
+    "download": "https://raw.githubusercontent.com/HackANurse/damage-application-dnd5e6/main/releases/damage-application-14.0.2.zip",
     "authors": [
         {
             "name": "Zhell",
@@ -33,8 +33,8 @@
                 "type": "system",
                 "compatibility": {
                     "minimum": "6.0.6",
-                    "maximum": "6.0.6",
-                    "verified": "6.0.6"
+                    "maximum": "6.1.0",
+                    "verified": "6.1.0"
                 }
             }
         ]

@@ -60,6 +60,44 @@ assert.equal(application.damages[0].value, 7);
 assert.equal(application.options.multiplier, 0.5);
 assert.equal(application.options.ignore.resistance.has('fire'), true);
 
+// dnd5e 6.1.0 stores default damage application rules on the chat message.
+let receivedOptions;
+const message61 = {
+  ...message,
+  system: {
+    ...message.system,
+    getDamageApplicationOptions(base) {
+      return {
+        ...base,
+        downgrade: new Set(['fire']),
+        ignore: {
+          ...base.ignore,
+          resistance: new Set([...base.ignore?.resistance ?? [], 'cold'])
+        }
+      };
+    }
+  }
+};
+const target61 = {
+  system: {attributes: {hp: {value: 10, temp: 0}}},
+  applyDamage: async (_damages, options) => { receivedOptions = options; }
+};
+DamageApplicator._getActors = () => new Set([target61]);
+DamageApplicator._getDataFromDamageRoll = async () => DamageApplicator.retrieveMessageData(message61);
+await DamageApplicator._quickApply({shiftKey: false});
+assert.equal(receivedOptions.ignore.resistance.has('cold'), true);
+assert.equal(receivedOptions.downgrade.has('fire'), true);
+
+const dialog = Object.create(DamageApplicator.prototype);
+dialog.message = message61;
+dialog.actorData = new Map([['target', {actor: target61, clone: {}, saved: null}]]);
+dialog.model = {values: {fire: 7}, properties: new Set(['mgc'])};
+dialog.onSave = 'none';
+dialog._ignoredTraits = () => ({resistance: new Set(['fire'])});
+await dialog._applyDamageToActor('target');
+assert.deepEqual(Array.from(receivedOptions.ignore.resistance).sort(), ['cold', 'fire']);
+assert.equal(receivedOptions.downgrade.has('fire'), true);
+
 DamageApplicator._getDataFromDamageRoll = async () => ({
   properties: new Set(), values: {fire: 7}, onSave: 'none', saveData: {ability: 'dex', dc: 14}
 });
